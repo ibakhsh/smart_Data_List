@@ -1,0 +1,58 @@
+
+<script id="dataLovLandingHTML" type="text/template">    
+        <label  class="col-sm-2 control-label" for='{{lovName}}_DESC'>{{lovLabel}}</label> 
+        <div class="col-sm-10 "> 
+            <div class="input-group"> 
+                <div class="input-group-addon btn btn-info inputLovBtn glyphicon glyphicon-search" lov-for="{{lovName}}" style="top:0px; color: #FFF" json="true"></div>  
+                <input type="text" class="form-control" id='{{lovName}}_DESC' disabled="true" value="{{value_DESC}}" /> 
+                <div class="input-group-addon {{_dataLovInputType}} hidden-xs"> 
+                    <input id='{{_dataLovSetting.formName}}:{{lovName}}' name='{{_dataLovSetting.formName}}:{{lovName}}'
+                         type='{{_dataLovInputType}}'
+                         value="{{value}}"
+                         class="inputLovValue hidden-xs" 
+                         lov-for="{{lovName}}"
+                         disabled="true"
+                         /> 
+                </div>
+                <div class="input-group-addon btn btn-info lov_Clear glyphicon glyphicon-ban-circle" lov-for="{{lovName}}" style="top:0px; color: #FFF" json="true"></div> 
+            </div> 
+            <div id="{{lovName}}_Lov" class="lovContainer close"></div> 
+        </div> 
+</script>
+
+
+<script type="text/template" id="dataLovListHTML">
+    <div id='lovContent_{{lovName}}' class='table-lov' lov-for='{{lovName}}' >
+    </div>
+</script>
+
+<script type="text/template" id="dataLovSearchBar">
+    <div class="form-group" style="margin: 5px; margin-bottom:10px;" > 
+        <div class="input-group"> 
+            <span class="input-group-addon glyphicon glyphicon-filter" style="top:0px;"></span> 
+            <input type="text" id="SearchText_{{lovName}}" lov-for="{{lovName}}" class="form-control keySearchInput" /> 
+            <div class="input-group-addon keySearch btn btn-info glyphicon glyphicon-repeat" style="top:0px; color:#fff;"></div> 
+        </div> 
+    </div>
+</script>
+
+
+<script type="text/template" id="dataLovListRowHTML">
+    {[ if (!key.length>0) {
+    ]}
+        <div id='lovContent_{{lovName}}{{commandRow}}'>
+    {[ } ]}
+    <a href='#' class='list-group-item {[if (key.length>0){]}lov_hyperlink{[} else{]}command_hyper_link{[}]}' lov-for='{{lovName}}' lov-rowUniqueId='{{key}}' lov-commandRow="{{commandRow}}" >
+       {[   if (key.length>0) { 
+       ]} 
+            ( {{key}} ) - 
+       {[ } ]}
+       {{value}}
+    </a>
+    {[ if (!key.length>0) {
+    ]}
+        </div>
+    {[ } ]}
+</script>
+
+
