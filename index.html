@@ -9,29 +9,17 @@ and open the template in the editor.
         <title>Smart Lov Example</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript" src="dist/main.js"></script>
     </head>
     <body style="padding:50px">
     <h1>Form with smart List Example:</h1>
     <form class="form-horizontal formClass">
         
-        <div id='NATIONALITY_ID_Container' class="form-group">
-        </div>
+        <!--TODO: add custome componenet implementation here, 
+                  Note: don't forget to import it properly. 
+         -->
 
     </form>
-        
-        <script type="text/javascript">
-        $(document).ready(function(){
-            _dataLovSetting.templateURL = "templates/smartLov.html";
-            _dataLovSetting.serverURL  = "";
-            _dataLovInputType = "text";
-                _("NATIONALITY_ID").smartLov({
-                    input:"NATIONALITY_ID",
-                    label:"Nationality",
-                    ajaxURL:"nations.json"
-                });
-                _("NATIONALITY_ID").smartLovModel("value","AD");
-        }); //done loading all Lovs
-        </script>
+
     </body>
 </html>
