@@ -19,6 +19,7 @@ if you can help on the change, please don't hesitate to contact me (igbmadinah@g
 ## To start contributing: 
 
 * Fork & Clone the project into your prefered directory. 
-* npm install to install all the required dependencies. 
-* run npm run start:dev and click on (http://localhost:8080) 
+* To install all the required dependencies run: npm install 
+* To lunch the starter project run: npm run start:dev 
+* To see the landing page click on (http://localhost:8080) 
 
