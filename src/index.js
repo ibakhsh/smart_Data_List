@@ -3,28 +3,32 @@ const arr = ["JavaScript","Node","webpack"];
 console.log(arr);
 
 
-
+//import javascript files with aliases 
 import $ from 'jquery';
-
-
-//test jquery 
-$(".formClass").append("Ibrahim Bakhsh");
-
-
 import _ from 'underscore';
-
-console.log("welcome Ibrahim");
-
-
 import Vue from 'vue';
 
+//import javascripts without aliases
 require('bootstrap');
 
-//const css = require('bootstrap-theme.min.css');
-
+//import stylesheets and fonts 
 const css1 = require('bootstrap/dist/css/bootstrap.css');
+//const css2 = require('../src/css/bootstrap-theme.min.css');
+//const glyphicons = require('../src/css/glyphicons.css');
+require('font-awesome/css/font-awesome.min.css');
 
-const css2 = require('../src/css/bootstrap-theme.min.css');
 
-const cssFonts = require('../src/css/glyphicons.css');
 
+console.log('index.js was loaded to the last line.');
+
+
+import Item from '../src/vuejs/ListItem.vue';
+
+$(document).ready(function(){
+    //TODO: fix loading the main elemnt using vue components.. 
+    new Vue({
+        el: "#item",
+        render: h => h(Item)
+    })
+
+});

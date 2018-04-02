@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class="list-group-item"></a>
+        <a class="list-group-item">{{item}}</a>
     </div>
 </template>
 
@@ -10,11 +10,11 @@
         name: 'item',
         data() {
             return {
-                item: {}
+                item: "initial value"
             }
         },
         created() {
-            
+            this.item = "First Item";
         }
     };
 </script>
