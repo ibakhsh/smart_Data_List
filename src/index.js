@@ -12,4 +12,8 @@ $(".formClass").append("Ibrahim Bakhsh");
 
 
 import _ from 'underscore';
- 
+
+console.log("welcome Ibrahim");
+
+
+import Vue from 'vue';

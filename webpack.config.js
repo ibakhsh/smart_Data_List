@@ -2,12 +2,11 @@ var webpack = require('webpack');
 const {resolve} = require('path');
 const path = require('path');
 var node_dir = __dirname + '/node_modules';
-//var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.js', 
         path: resolve(__dirname,'dist')
     },
     resolve: {
@@ -16,8 +15,6 @@ module.exports = {
             underscore: 'lodash'
         }
     },
-    //target: 'node',
-    //externals: [nodeExternals()],
     module: {
         rules: [
             {
@@ -27,10 +24,10 @@ module.exports = {
                     query: { presets: ['es2015'] } 
                 },
                 exclude: resolve(__dirname,'node_modules'),
-                include: [
+                /*include: [
                     resolve(node_dir, 'jquery/dist/jquery.min.js'),
-                    resolve(node_dir, 'underscore/underscore.min.js'),
-                ]
+                    resolve(node_dir, 'lodash/index.js'),
+                ]*/
                 
             },
             {
@@ -42,14 +39,11 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         /*new webpack.ProvidePlugin({
-            _: 'underscore'
-        }),*/
-        new webpack.ProvidePlugin({
             _: 'lodash'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery'
-        })
+        })*/
     ],
     mode: 'development'
 };
