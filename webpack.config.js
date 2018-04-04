@@ -1,6 +1,6 @@
 var webpack = require('webpack');
-const {resolve} = require('path');
-const path = require('path');
+var {resolve} = require('path');
+var path = require('path');
 var node_dir = __dirname + '/node_modules';
 
 module.exports = {
@@ -12,7 +12,8 @@ module.exports = {
     resolve: {
         alias: {
             jquery: resolve(node_dir, 'jquery/dist/jquery.min.js'),
-            underscore: 'lodash'
+            underscore: 'lodash',
+            vue$: resolve(node_dir,'vue/dist/vue.esm.js')
         }
     },
     module: {
@@ -50,6 +51,10 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jquery: "jquery"
+        })
         /*new webpack.ProvidePlugin({
             _: 'lodash'
         }),

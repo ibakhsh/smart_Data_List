@@ -8,13 +8,14 @@
 <script>
     export default {
         name: 'item',
+        props: ["id"],
         data() {
             return {
                 item: "initial value"
             }
         },
         created() {
-            this.item = "First Item";
+            this.item = "First Item "+ this.id;
         }
     };
 </script>

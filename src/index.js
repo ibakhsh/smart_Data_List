@@ -1,9 +1,5 @@
-
-const arr = ["JavaScript","Node","webpack"];
-console.log(arr);
-
-
 //import javascript files with aliases 
+global.jquery = require('jquery'); 
 import $ from 'jquery';
 import _ from 'underscore';
 import Vue from 'vue';
@@ -18,17 +14,18 @@ const css1 = require('bootstrap/dist/css/bootstrap.css');
 require('font-awesome/css/font-awesome.min.css');
 
 
-
-console.log('index.js was loaded to the last line.');
-
-
-import Item from '../src/vuejs/ListItem.vue';
+import ListItem from '../src/vuejs/ListItem.vue';
+import InputLov from '../src/vuejs/InputLov.vue';
 
 $(document).ready(function(){
-    //TODO: fix loading the main elemnt using vue components.. 
     new Vue({
-        el: "#item",
-        render: h => h(Item)
-    })
-
+        el: "#app",
+        components: {
+            'listitem': ListItem, 
+            'inputlov': InputLov
+        } 
+    });
 });
+
+ 
+console.log('index.js was loaded to the last line.');
