@@ -14,6 +14,7 @@ const css1 = require('bootstrap/dist/css/bootstrap.css');
 require('font-awesome/css/font-awesome.min.css');
 
 
+//import vue components 
 import ListItem from '../src/vuejs/ListItem.vue';
 import InputLov from '../src/vuejs/InputLov.vue';
 
@@ -26,7 +27,7 @@ $(document).ready(function(){
         } 
     });
 
-    
+     
 
 });
 

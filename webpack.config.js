@@ -33,7 +33,10 @@ module.exports = {
             },
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    hotReload: true
+                }
             },
             {
                 test: /\.css$/,
@@ -50,7 +53,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        //new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",
             jquery: "jquery"
@@ -62,5 +65,14 @@ module.exports = {
             $: 'jquery'
         })*/
     ],
-    mode: 'development'
+    mode: 'development',
+    devServer: {
+        hot: true,
+        inline: true,
+        host: "localhost",
+        port: 8082,
+        watchOptions: {
+            poll: true
+        }
+    }
 };
