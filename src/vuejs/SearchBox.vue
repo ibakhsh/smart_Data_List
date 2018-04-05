@@ -14,13 +14,29 @@
     import ListItem from './ListItem.vue';
     export default {
         name: 'SearchBox',
+        props: ["dir"],
         data() {
             return {
                 item: {}
             }
         },
-        created() {
-            
+        created: function(e) {
+            //معالجة الصفحة من اليمين إلى اليسار 
+            let direction = "ltr";
+            if(this.dir != undefined && this.dir != null) {
+                direction = this.dir;
+            } else {
+                let isRTL = document.getElementsByTagName("html")[0].getAttribute("dir");
+                if(isRTL ==null) isRTL = direction;
+                if(isRTL == "rtl") {
+                    direction = isRTL;
+                }
+            }
+
+            if(direction.toUpperCase() == "RTL") {
+                console.log('document is right to left direction');
+                console.log('TODO:to be implemented rtl');
+            }       
         }
     };
 </script>
