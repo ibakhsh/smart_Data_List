@@ -25,7 +25,12 @@ $(document).ready(function(){
             'inputlov': InputLov
         } 
     });
+
+    
+
 });
+
 
  
 console.log('index.js was loaded to the last line.');
+
