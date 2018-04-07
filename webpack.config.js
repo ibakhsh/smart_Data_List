@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var {resolve} = require('path');
 var path = require('path');
 var node_dir = __dirname + '/node_modules';
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -57,6 +58,9 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jquery: "jquery"
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
         })
         /*new webpack.ProvidePlugin({
             _: 'lodash'
@@ -73,6 +77,8 @@ module.exports = {
         port: 8082,
         watchOptions: {
             poll: true
-        }
+        },
+        contentBase: ["src"],
+        watchContentBase: true
     }
 };
