@@ -1,21 +1,26 @@
 <template>
-    <div>
-        <a class="list-group-item">{{item}}</a>
+    <div class="list-item">
+        <a class="list-group-item" @click="setSelectedRow(item)">{{description}} <slot/></a>
     </div>
 </template>
 
 
 <script>
     export default {
-        name: 'item',
-        props: ["id"],
+        name: "listItem",
+        props: ["id","description", "item"],
         data() {
             return {
-                item: "initial value"
+                index: -1
             }
         },
-        created() {
-            this.item = "First Item "+ this.id;
+        beforeUpdate() {
+            //console.log(description);
+        },
+        methods: {
+            setSelectedRow: function(item) {
+                this.$emit('setSelectedRow',item);
+            }
         }
     };
 </script>
@@ -23,5 +28,14 @@
 
 
 <style scoped>
-    
+    .list-item{
+        padding:0.09em; 
+        cursor: pointer;
+    }
+
+    .list-item>a:hover{
+        background-color: #cce5ff;
+        color: #004085;
+        border-color: #b8daff;
+    }
 </style>     

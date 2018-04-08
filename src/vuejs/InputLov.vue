@@ -1,40 +1,68 @@
 <template>
-    <div class="col-sm-10" style="margin: 10px;">
+    <div class="">
         <div class="input-group">
-            <div class="input-group-addon btn btn-info inputLovBtn fa fa-search"></div>
-            <div class="input-group-addon"> <input type="text" class="form-control" :id='id+"_DESC"' disabled="true" :value="'( '+value+' ) '+value_DESC"/> </div>
-            <div class="input-group-addon hidden-xs">
-                <input :id='id' :name='id'
-                        type='hidden'
-                        :value="value"
-                        class="form-control inputLovValue hidden-xs"
-                        disabled="true"
-                        />
-            </div>
-            <div class="input-group-addon btn btn-info lov_Clear fa fa-ban" style="color: #FFF"></div>
+            <div class="input-group-btn btn btn-primary fa fa-search"></div>
+            <div class="input-group-addon"> <input type="text" class="form-control" :id='id+"_DESC"' disabled="true" :value="displayVal()"/> </div>
+            <input :id='id' :name='id'
+                    type='hidden'
+                    :value="activeRow.value"
+                    class="form-control"
+                    disabled="true"
+                    />
+            <div class="input-group-btn btn btn-primary fa fa-ban"></div>
         </div>
-        <!--<div id="{{lovName}}_Lov" class="lovContainer close"></div> -->
+        <div :id="id+'_Container'" class="lovOpenContainer">
+            <search-box :lovId='id' @setSelectedRow="setSelectedRow"></search-box>
+            <div v-for="item in items">
+                <list-item id="item1" @setSelectedRow="setSelectedRow" @loadMore="loadMore" :description="item.description" :item="item"></list-item>
+            </div>
+        </div>
     </div>
 </template>
 
 
 
 <script>
-    var dir = document.getElementsByTagName('html')[0].getAttribute("dir");
-    if (dir==null) dir = "ltr";
-    console.log(dir);
+
+    import ListItem from './ListItem.vue';
+    import SearchBox from './SearchBox.vue';
+
     export default {
         name: 'InputLov',
         props: ["id"],
+        components: {
+            'list-item': ListItem,
+            'search-box': SearchBox
+        },
         data() {
             return {
-                value: "0",
-                value_DESC: "Lolo"
+                activeRow: {value: "0", description: "Lolo"},
+                items: [
+                    {value: "1", description: "item row 1"},
+                    {value: "2", description: "item row 2"},
+                    {value: "3", description: "item row 3"},
+                    {value: "4", description: "item row 4"}
+                ]
             }
         },
-        created() {
-            // this.value = "1";
-            // this.value_DESC="سعودي";
+        methods: {
+            displayVal: function(){
+                if(this.activeRow.value.toString().length) {
+                    return "(" + this.activeRow.value + ") " +this.activeRow.description;
+                } else {
+                    return this.activeRow.description;
+                }
+            },
+            setSelectedRow: function(newRow){
+                if(newRow.hasOwnProperty('value') && newRow.hasOwnProperty('description')) {
+                    this.activeRow = newRow;
+                } else {
+                    console.err('Value passed from search-box or list-item has no value or description');
+                }
+            },
+            loadMore: function(e){
+
+            }
         }
     };
 </script>
@@ -42,11 +70,94 @@
 
 
 <style scoped>
+    .lovOpenContainer {
+        margin-bottom:10px; 
+        padding-left: 10px; 
+        padding-right: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        padding-bottom:10px;
+        padding-top: 10px;
+        border-radius: 0.2em;
+        border-top: 0;
+    }
     input {
         border-radius: 0em;
     }
 
     .btn {
         color: #FFF;
+        width: 2.5em;
     }
+
+    .input-group {
+        display: inline-table;
+        vertical-align: middle;
+        position: relative;
+        border-collapse: separate;
+        box-sizing: border-box;
+    }
+
+    .input-group .form-control:not(:first-child):not(:last-child), .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child) {
+        border-radius: 0;
+    }
+
+    .input-group>.form-control{
+        width: 100%;
+    }
+
+    .input-group .form-control, .input-group-addon, .input-group-btn{
+        display: table-cell;
+    }
+
+    .input-group .input-group-addon {
+        width: auto;
+    }
+
+    .input-group-addon:last-child {
+        border-left: 0;
+    }
+
+    /** left to right group btns style */
+    html:not([dir*="rtl"]).input-group-btn:first-child, 
+    body:not([dir*="rtl"]).input-group-btn:first-child ,
+    form:not([dir*="rtl"]).input-group-btn:first-child ,
+    .input-group-btn:not([dir*="rtl"]):first-child
+      {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    html:not([dir*="rtl"]).input-group-btn:last-child,
+    body:not([dir*="rtl"]).input-group-btn:last-child,
+    form:not([dir*="rtl"]).input-group-btn:first-child ,
+    .input-group-btn:not([dir*="rtl"]):last-child  {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
+    /** right to left group btns style */
+    html[dir*="rtl"] .input-group-btn:first-child,
+    body[dir*="rtl"] .input-group-btn:first-child,
+    form[dir*="rtl"] .input-group-btn:first-child,
+    .input-group-btn[dir*="rtl"]:last-child
+      {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    html[dir*="rtl"] .input-group-btn:last-child,
+    body[dir*="rtl"] .input-group-btn:last-child,
+    form[dir*="rtl"] .input-group-btn:last-child,
+    .input-group-btn[dir*="rtl"]:first-child  {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 0.25rem;
+        border-bottom-left-radius: 0.25rem;
+    }
+
+    /** end ltr/rtl style */
+
+
 </style>
