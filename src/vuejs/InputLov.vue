@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="input-group">
-            <div class="input-group-btn btn btn-primary fa fa-search"></div>
+            <div class="input-group-btn btn btn-primary fa fa-search" @click="switchState()"></div>
             <div class="input-group-addon"> <input type="text" class="form-control" :id='id+"_DESC"' disabled="true" :value="displayVal()"/> </div>
             <input :id='id' :name='id'
                     type='hidden'
@@ -13,14 +13,14 @@
         </div>
         <div :id="id+'_Container'" class="lovOpenContainer">
             <search-box :lovId='id' @setSelectedRow="setSelectedRow"></search-box>
-            <div v-for="item in items">
+            <div v-for="item in getItems()" :key="item.value">
                 <list-item id="item1" @setSelectedRow="setSelectedRow" @loadMore="loadMore" :description="item.description" :item="item"></list-item>
             </div>
         </div>
     </div>
 </template>
 
-
+ 
 
 <script>
 
@@ -42,10 +42,29 @@
                     {value: "2", description: "item row 2"},
                     {value: "3", description: "item row 3"},
                     {value: "4", description: "item row 4"}
-                ]
+                ],
+                state: "close",
+                dataset: []
             }
         },
+        created() {
+            this.dataset = this.items;
+        }, 
         methods: {
+            getItems: function(){
+                return this.dataset;
+            },
+            switchState: function(newState){
+                if(newState == undefined) newState = (this.state=="open")? "close":"open";
+                //console.log('we are here & newState:'+newState);
+                if(this.state == "open" || newState == "close") {
+                    $('.lovOpenContainer').css('display','none');
+                    this.state = newState;
+                } else if(this.state == "close" || newState == "open") {
+                    $('.lovOpenContainer').css('display','block');
+                    this.state = newState;
+                }
+            },
             displayVal: function(){
                 if(this.activeRow.value.toString().length) {
                     return "(" + this.activeRow.value + ") " +this.activeRow.description;
@@ -59,6 +78,7 @@
                 } else {
                     console.err('Value passed from search-box or list-item has no value or description');
                 }
+                this.switchState("close");
             },
             loadMore: function(e){
 
