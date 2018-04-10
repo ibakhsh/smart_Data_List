@@ -14,6 +14,51 @@ const css1 = require('bootstrap/dist/css/bootstrap.css');
 require('font-awesome/css/font-awesome.min.css');
 
 
+_.mixin({
+    whereLike: function (data, search) {
+        var dataA = data;
+
+        //if(!_.isArray(dataA)) dataA = [dataA];
+
+
+        return _.filter(dataA, function (obj) {
+            return _.values(obj).some(function (el) {
+                //return el.indexOf(searchStr) > -1;
+                return el.match(search) !== null;
+            });
+        });
+    },
+    likeFrom: function (searchText, data) {
+        var dataA = data;
+
+        if (!_.isArray(dataA)) dataA = [dataA];
+
+        var searchStr = searchText;
+
+        var searchStr1 = searchStr;
+        searchStr1 = searchStr1.replace(/٪/g, "%");
+        searchStr1 = searchStr1.replace(/٠/g, "0");
+        searchStr1 = searchStr1.replace(/١/g, "1");
+        searchStr1 = searchStr1.replace(/٢/g, "2");
+        searchStr1 = searchStr1.replace(/٣/g, "3");
+        searchStr1 = searchStr1.replace(/٤/g, "4");
+        searchStr1 = searchStr1.replace(/٥/g, "5");
+        searchStr1 = searchStr1.replace(/٦/g, "6");
+        searchStr1 = searchStr1.replace(/٧/g, "7");
+        searchStr1 = searchStr1.replace(/٨/g, "8");
+        searchStr1 = searchStr1.replace(/٩/g, "9");
+
+        searchStr1 = searchStr1.replace(/%/g, ".*");
+        searchStr1 = searchStr1.replace(/_/g, ".");
+        searchStr1 = searchStr1.replace(/\\/g, ".");
+        //console.log("search text:"+searchStr1);
+        var search = new RegExp(searchStr1, 'g');
+
+        return this.whereLike(dataA, search);
+
+    }
+});
+
 //import vue components 
 import ListItem from '../src/vuejs/ListItem.vue';
 import InputLov from '../src/vuejs/InputLov.vue';

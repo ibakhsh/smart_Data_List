@@ -12,7 +12,7 @@
             <div class="input-group-btn btn btn-primary fa fa-ban"></div>
         </div>
         <div :id="id+'_Container'" class="lovOpenContainer">
-            <search-box :lovId='id' @setSelectedRow="setSelectedRow"></search-box>
+            <search-box :lovId='id' @setSelectedRow="setSelectedRow" @searchDataset="searchDataset"></search-box>
             <div v-for="item in getItems()" :key="item.value">
                 <list-item id="item1" @setSelectedRow="setSelectedRow" @loadMore="loadMore" :description="item.description" :item="item"></list-item>
             </div>
@@ -36,12 +36,25 @@
         },
         data() {
             return {
+                scrolled: false,
                 activeRow: {value: "0", description: "Lolo"},
                 items: [
-                    {value: "1", description: "item row 1"},
-                    {value: "2", description: "item row 2"},
-                    {value: "3", description: "item row 3"},
-                    {value: "4", description: "item row 4"}
+                    {value: "1", description: "First item on the list 1"},
+                    {value: "2", description: "second row 2"},
+                    {value: "3", description: "third line 3"},
+                    {value: "4", description: "forth item 4"},
+                    {value: "5", description: "First item on the list 5"},
+                    {value: "6", description: "second row 6"},
+                    {value: "7", description: "third line 7"},
+                    {value: "8", description: "forth item 8"},
+                    {value: "9", description: "First item on the list 9", info:"igb"},
+                    {value: "10", description: "second row 10"},
+                    {value: "11", description: "third line 11"},
+                    {value: "12", description: "forth item 12"},
+                    {value: "13", description: "First item on the list 13"},
+                    {value: "14", description: "second row 14"},
+                    {value: "15", description: "third line 15"},
+                    {value: "16", description: "forth item 16"}
                 ],
                 state: "close",
                 dataset: []
@@ -50,9 +63,32 @@
         created() {
             this.dataset = this.items;
         }, 
+        mounted() {
+
+            document.getElementsByClassName("lovOpenContainer")[0].addEventListener('scroll', this.handleScroll);
+            console.log('scrolling Injected');
+        },
+        beforeDestroy() {
+            document.getElementsByClassName("lovOpenContainer")[0].removeEventListener('scroll', this.handleScroll);
+            console.log('scrolling Destroyed');
+        },
         methods: {
+            handleScroll () {
+                this.scrolled = window.scrollY > 0;
+                console.log('scrolling..');
+            },
             getItems: function(){
                 return this.dataset;
+            },
+            searchDataset: function(searchText){
+                console.log('in searchDataset we are now, searchText:'+searchText);
+                if(searchText.length>0){
+                    this.dataset = [];
+                    this.dataset = _(searchText).likeFrom(this.items).value();
+                    
+                } else {
+                    this.dataset = this.items;
+                }
             },
             switchState: function(newState){
                 if(newState == undefined) newState = (this.state=="open")? "close":"open";
@@ -99,6 +135,8 @@
         padding-top: 10px;
         border-radius: 0.2em;
         border-top: 0;
+        overflow: auto;
+        height: 200px;
     }
     input {
         border-radius: 0em;

@@ -1,8 +1,8 @@
 <template>
     <div class="input-group"> 
-        <span class="input-group-btn btn btn-default fa fa-filter" ></span> 
-        <div class="input-group-addon"><input type="text" :id="'SearchText_'+lovId" class="form-control" /></div>
-        <div class="input-group-btn btn btn-default fa fa-repeat" style="top:0px;"></div> 
+        <span class="input-group-btn btn btn-default fa fa-filter"></span> 
+        <div class="input-group-addon"><input type="text" :id="'SearchText_'+lovId" class="form-control" @keyup="doSearch"/></div>
+        <div class="input-group-btn btn btn-default fa fa-repeat" style="top:0px;" @click="doSearch"></div> 
     </div> 
 </template>
 
@@ -11,10 +11,16 @@
 <script>
     export default {
         name: 'SearchBox',
-        props: ["lovId","setSelectedRow", "item"],
+        props: ["lovId","setSelectedRow", "item", "searchDataset"],
         mounted() {
             var newRow = {value: "", description: "search mode.."};
             this.$emit('setSelectedRow',newRow);
+        },
+        methods: {
+            doSearch: function(e){
+                var val = $('#SearchText_'+this.lovId).val();
+                this.$emit('searchDataset',val);
+            }
         }
     };
 </script>
