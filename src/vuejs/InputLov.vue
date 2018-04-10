@@ -90,7 +90,7 @@
             },
             getItems: function(){
                 return this.dataset;
-            },
+            }, 
             searchDataset: function(searchText){
                 console.log('in searchDataset we are now, searchText:'+searchText);
                 if(searchText.length>0){
