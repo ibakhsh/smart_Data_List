@@ -11,7 +11,7 @@
                     />
             <div class="input-group-btn btn btn-primary fa fa-ban"></div>
         </div>
-        <div :id="id+'_Container'" class="lovOpenContainer">
+        <div :id="containerId" class="lovOpenContainer">
             <search-box :lovId='id' @setSelectedRow="setSelectedRow" @searchDataset="searchDataset"></search-box>
             <div v-for="item in getItems()" :key="item.value">
                 <list-item id="item1" @setSelectedRow="setSelectedRow" @loadMore="loadMore" :description="item.description" :item="item"></list-item>
@@ -57,25 +57,36 @@
                     {value: "16", description: "forth item 16"}
                 ],
                 state: "close",
-                dataset: []
+                dataset: [],
+                containerId: ""
             }
         },
         created() {
             this.dataset = this.items;
+            this.containerId = this.id+"_Container";
         }, 
         mounted() {
-
-            document.getElementsByClassName("lovOpenContainer")[0].addEventListener('scroll', this.handleScroll);
+            document.getElementById(this.containerId).addEventListener('scroll', this.handleScroll);
             console.log('scrolling Injected');
         },
         beforeDestroy() {
-            document.getElementsByClassName("lovOpenContainer")[0].removeEventListener('scroll', this.handleScroll);
+            document.getElementById(this.containerId).removeEventListener('scroll', this.handleScroll);
             console.log('scrolling Destroyed');
         },
         methods: {
             handleScroll () {
                 this.scrolled = window.scrollY > 0;
-                console.log('scrolling..');
+                // var sh = $(".lovOpenContainer").scrollHeight;
+                // var st = $(".lovOpenContainer").scrollTop;
+                var sh = document.getElementById(this.containerId).scrollHeight;
+                var st = document.getElementById(this.containerId).scrollTop;
+                var oh = document.getElementById(this.containerId).offsetHeight;
+                console.log('scrolling..'+(sh-st-oh+1));
+                if(sh-st-oh+1<1) {
+                    //TODO: call the loadMore function to load additional data
+                    var n = this.items.length+1;
+                    this.items.push({value: n, description: "New loaded content #:"+n});
+                }
             },
             getItems: function(){
                 return this.dataset;
