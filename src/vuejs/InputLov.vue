@@ -81,7 +81,7 @@
                 var sh = document.getElementById(this.containerId).scrollHeight;
                 var st = document.getElementById(this.containerId).scrollTop;
                 var oh = document.getElementById(this.containerId).offsetHeight;
-                console.log('scrolling..'+(sh-st-oh+1));
+                console.log('scrolling..'+(sh-st-oh+1)); 
                 if(sh-st-oh+1<1) {
                     //TODO: call the loadMore function to load additional data
                     var n = this.items.length+1;
