@@ -4,7 +4,7 @@
 very elegent smart data list for html, buit using backbones & bootsrap http://datalist.event-root.com
 
 TODO's: 
-- [ ] build using vuejs 
+- [x] build using vuejs 
 - [ ] build using angularjs
 - [ ] build using react 
 - [ ] build using jquery 
